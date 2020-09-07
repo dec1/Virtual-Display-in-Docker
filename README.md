@@ -8,6 +8,7 @@ Docker installed.
 see eg [here](https://docs.docker.com/engine/install/ubuntu/#install-from-a-package)
 
 
+## Setup:
 * Run docker container based on ubuntu 20
 
 `> docker run -it ubuntu:20.04`
