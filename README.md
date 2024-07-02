@@ -1,11 +1,17 @@
 # Virtual Display in Docker
 
-Thanks to [Clemens Anhuth ](https://kb.froglogic.com/squish/howto/using-squish-headless-systems/) 
+Many applications and automated tests, such as those using Selenium for browser automation, must be run in a **graphical environment** to function properly. It would be nice to also be able to run such applications (or automated tests theron) in **headless** environments like CI/CD pipelines or cloud-based servers. Its possible, but doing so can be challenging. 
+
+This repository helps you setup a Docker container with a virtual display suitable for running applications that normally require a graphical environment. 
+
+
+
+
 
 
 ## Preqequisites:
 Docker installed. 
-see eg [here](https://docs.docker.com/engine/install/ubuntu/#install-from-a-package)
+see also [here](https://github.com/dec1/practical_devops/tree/main/devops/docker/main)
 
 
 ## Setup:
@@ -60,3 +66,5 @@ root@6d940a9a4013:/home/ci_vd#
 
 
 
+
+Thanks to [Clemens Anhuth ](https://kb.froglogic.com/squish/howto/using-squish-headless-systems/) 
