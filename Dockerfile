@@ -1,3 +1,10 @@
+# This Dockerfile sets up an environment for running Selenium tests with Chrome in a headless mode
+# using a virtual display (Xvfb). It includes all necessary dependencies for Selenium and Chrome automation,
+# and it sets up a Python virtual environment with Robot Framework and SeleniumLibrary for test automation.
+# key to enabling this are scripts copied into the image:
+# - start_vd.sh
+# - stop_vd.sh  
+
 # Use the official Ubuntu 22.04 as the base image
 FROM ubuntu:22.04
 
