@@ -4,7 +4,7 @@ Library  SeleniumLibrary
 *** Variables ***
 ${URL}  https://www.example.com
 ${TITLE}  Example Domain
-${CHROME_OPTIONS}  --headless --no-sandbox --disable-dev-shm-usage --remote-debugging-port=9222
+${CHROME_OPTIONS}  headless, no-sandbox, disable-dev-shm-usage
 
 *** Test Cases ***
 Open Browser and Check Title

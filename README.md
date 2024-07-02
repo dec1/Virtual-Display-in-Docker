@@ -1,6 +1,15 @@
 docker build -t virtual-display-app .
 docker run -it --name my_container virtual-display-app
 
+start_vd.sh 8
+source /opt/robotframework/bin/activate
+python3 /home/test_chrome.py
+
+/opt/robotframework/bin/robot /home/simple_test.robot
+
+docker stop $(docker ps -a -q)
+docker rm -vf $(docker ps -a -q)
+
 
 # Virtual Display in Docker
 

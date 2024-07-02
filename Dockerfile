@@ -1,5 +1,5 @@
-# Use the official Ubuntu 24.04 as the base image
-FROM ubuntu:24.04
+# Use the official Ubuntu 22.04 as the base image
+FROM ubuntu:22.04
 
 # Set environment variable to stop tzdata asking questions
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,25 +18,32 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     unzip \
     fonts-liberation \
-    liboss4-salsa-asound2 \
+    libasound2 \
     libgbm1 \
     libnspr4 \
     libnss3 \
     libu2f-udev \
-    xdg-utils && \
+    xdg-utils \
+    libvulkan1 \
+    dos2unix && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a virtual environment and install Robot Framework and SeleniumLibrary
 RUN python3 -m venv /opt/robotframework && \
     /opt/robotframework/bin/pip install --upgrade pip setuptools wheel && \
-    /opt/robotframework/bin/pip install robotframework robotframework-seleniumlibrary
+    /opt/robotframework/bin/pip install robotframework robotframework-seleniumlibrary selenium
 
 # Install Chrome and ChromeDriver
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install && \
-    wget -q https://chromedriver.storage.googleapis.com/91.0.4472.101/chromedriver_linux64.zip && \
+    apt-get update && \
+    apt-get install -y ./google-chrome-stable_current_amd64.deb || true && \
+    apt-get install -f -y && \
+    rm google-chrome-stable_current_amd64.deb
+
+RUN wget -q https://chromedriver.storage.googleapis.com/126.0.6478.126/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip -d /usr/local/bin/ && \
-    chmod +x /usr/local/bin/chromedriver
+    chmod +x /usr/local/bin/chromedriver && \
+    rm chromedriver_linux64.zip
 
 # Set the working directory
 WORKDIR /home
@@ -47,8 +54,10 @@ COPY script/stop_vd.sh /usr/local/bin/stop_vd.sh
 COPY test/simple_test.robot /home/simple_test.robot
 COPY test/test_chrome.py /home/test_chrome.py
 
-# Ensure the scripts are executable
-RUN chmod +x /usr/local/bin/start_vd.sh && \
+# Ensure the scripts have Unix-style line endings and are executable
+RUN dos2unix /usr/local/bin/start_vd.sh && \
+    dos2unix /usr/local/bin/stop_vd.sh && \
+    chmod +x /usr/local/bin/start_vd.sh && \
     chmod +x /usr/local/bin/stop_vd.sh
 
 # Set the entrypoint
