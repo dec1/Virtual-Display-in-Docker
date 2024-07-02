@@ -4,7 +4,7 @@ FROM ubuntu:24.04
 # Set environment variable to stop tzdata asking questions
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install prerequisites
+# Install prerequisites and Chrome dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     ca-certificates \
@@ -16,7 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-venv \
     wget \
-    unzip && \
+    unzip \
+    fonts-liberation \
+    liboss4-salsa-asound2 \
+    libgbm1 \
+    libnspr4 \
+    libnss3 \
+    libu2f-udev \
+    xdg-utils && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a virtual environment and install Robot Framework and SeleniumLibrary
@@ -38,6 +45,7 @@ WORKDIR /home
 COPY script/start_vd.sh /usr/local/bin/start_vd.sh
 COPY script/stop_vd.sh /usr/local/bin/stop_vd.sh
 COPY test/simple_test.robot /home/simple_test.robot
+COPY test/test_chrome.py /home/test_chrome.py
 
 # Ensure the scripts are executable
 RUN chmod +x /usr/local/bin/start_vd.sh && \
