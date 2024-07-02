@@ -1,3 +1,7 @@
+docker build -t virtual-display-app .
+docker run -it --name my_container virtual-display-app
+
+
 # Virtual Display in Docker
 
 Many applications and automated tests, such as those using Selenium for browser automation, must be run in a **graphical environment** to function properly. It would be nice to also be able to run such applications (or automated tests theron) in **headless** environments like CI/CD pipelines or cloud-based servers. Its possible, but doing so can be challenging. 
@@ -10,61 +14,61 @@ This repository helps you setup a Docker container with a virtual display suitab
 
 
 ## Preqequisites:
-Docker installed. 
-see also [here](https://github.com/dec1/practical_devops/tree/main/devops/docker/main)
+Docker (or podman) installed. 
+
 
 
 ## Setup:
-* Run docker container based on ubuntu 20
+- Run docker container based on ubuntu 20 (giving it some name eg _my_container_)
 
-`> docker run -it ubuntu:20.04`
+    -  `docker run -it --name my_container ubuntu:20.04`
 
-Note: You may need to prefix with "sudo" depending on your setup
+    - _Note_: You may need to prefix with "sudo" depending on your setup. See also [here](https://github.com/dec1/practical_devops/blob/main/devops/docker/main/host.md)
 
-* Stop tzdata asking questions:
+- Stop tzdata asking questions:
+    - `export DEBIAN_FRONTEND=noninteractive`
 
-`> export DEBIAN_FRONTEND=noninteractive`
+
+####
+- Install prerequisites
+    - `apt-get update && apt-get install -y --no-install-recommends git ca-certificates xvfb xfwm4 psmisc pstree`
+
+####
+- Clone this repo with the (`start_vd.sh`, `stop_vd.sh`) scripts
+    ```shell
+    cd /home
+    git clone https://github.com/dec1/ci_vd
+    cd ci_vd
+    ```
+####
+- Alternatively, open a new terminal on your host machine, and
+    copy the scripts into the running container:
+
+    ```sh
+    docker cp /path/to/local/start_vd.sh my_container:/usr/local/bin/start_vd.sh
+    docker cp /path/to/local/stop_vd.sh my_container:/usr/local/bin/stop_vd.sh
+    ```
+####
+- Ensure the scripts are executable within the container:
+
+    ```sh
+    docker exec -it virtual_display_container chmod +x /usr/local/bin/start_vd.sh
+    docker exec -it virtual_display_container chmod +x /usr/local/bin/stop_vd.sh
+    ```
+####
+- Start the virtual display
+    `./start_vd.sh 8`
 
 
-```
-> apt-get update && apt-get install -y --no-install-recommends git ca-certificates xvfb xfwm4 psmisc
-```
-* configure git's proxy (optional)
+- ##### Run/Test your gui based application in the container here
 
-`> git config --global http.proxy http://<proxy_ip>:<proxy-port>`
-
-* clone this repo with the scripts
-
-```
-> cd /home
-> git clone https://github.com/dec1/ci_vd
-> cd ci_vd
-```
-
-* start the virtual display
-
-```
-> ./start_vd.sh 8
-(xfwm4:4950): dbind-WARNING **: 15:37:13.875: AT-SPI: Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: The name org.a11y.Bus was not provided by any .service files
-dbus-daemon[4949]: [session uid=0 pid=4949] Activating service name='org.xfce.Xfconf' requested by ':1.1' (uid=0 pid=4950 comm="xfwm4 " label="docker-default (enforce)")
-dbus-daemon[4949]: [session uid=0 pid=4949] Successfully activated service 'org.xfce.Xfconf'
-
-(xfwm4:4950): GLib-CRITICAL **: 15:37:13.910: g_str_has_prefix: assertion 'prefix != NULL' failed
-
-(xfwm4:4950): xfwm4-WARNING **: 15:37:14.727: Another compositing manager is running on screen 0
-
-(xfwm4:4950): xfwm4-WARNING **: 15:37:14.732: Failed to connect to session manager: Failed to connect to the session manager: SESSION_MANAGER environment variable not defined
-```
-* stop the virtual display
-
-```
-root@6d940a9a4013:/home/ci_vd# ./stop_vd.sh 8
-root@6d940a9a4013:/home/ci_vd# 
-(xfconfd:4958): xfconfd-CRITICAL **: 15:37:27.061: Name org.xfce.Xfconf lost on the message dbus, exiting.
-```
-
+####
+- stop the virtual display
+    - `./stop_vd.sh 8`
 
 
 
 
+
+---
 Thanks to [Clemens Anhuth ](https://kb.froglogic.com/squish/howto/using-squish-headless-systems/) 
