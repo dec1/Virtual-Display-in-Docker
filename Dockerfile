@@ -24,8 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libnss3 \
     libu2f-udev \
     xdg-utils \
-    libvulkan1 \
-    dos2unix && \
+    libvulkan1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a virtual environment and install Robot Framework and SeleniumLibrary
@@ -33,17 +32,18 @@ RUN python3 -m venv /opt/robotframework && \
     /opt/robotframework/bin/pip install --upgrade pip setuptools wheel && \
     /opt/robotframework/bin/pip install robotframework robotframework-seleniumlibrary selenium
 
-# Install Chrome and ChromeDriver
+# Download and install Google Chrome
 RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     apt-get update && \
     apt-get install -y ./google-chrome-stable_current_amd64.deb || true && \
     apt-get install -f -y && \
     rm google-chrome-stable_current_amd64.deb
 
+# Download and install ChromeDriver
 RUN wget -q https://chromedriver.storage.googleapis.com/126.0.6478.126/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip -d /usr/local/bin/ && \
     chmod +x /usr/local/bin/chromedriver && \
-    rm chromedriver_linux64.zip
+    rm chromedriver_linux64.zip || true
 
 # Set the working directory
 WORKDIR /home
@@ -54,10 +54,8 @@ COPY script/stop_vd.sh /usr/local/bin/stop_vd.sh
 COPY test/simple_test.robot /home/simple_test.robot
 COPY test/test_chrome.py /home/test_chrome.py
 
-# Ensure the scripts have Unix-style line endings and are executable
-RUN dos2unix /usr/local/bin/start_vd.sh && \
-    dos2unix /usr/local/bin/stop_vd.sh && \
-    chmod +x /usr/local/bin/start_vd.sh && \
+# Ensure the scripts are executable
+RUN chmod +x /usr/local/bin/start_vd.sh && \
     chmod +x /usr/local/bin/stop_vd.sh
 
 # Set the entrypoint
