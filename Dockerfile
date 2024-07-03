@@ -61,9 +61,9 @@ COPY script/start_vd.sh /home/start_vd.sh
 COPY script/stop_vd.sh /home/stop_vd.sh
 
 # Copy test files into the container
-COPY test/test.robot /home/test.robot
 COPY test/test_navigate.py /home/test_navigate.py
-COPY test/test_file_upload.py /home/test_file_upload.py
+COPY test/test_canvas.py /home/test_canvas.py
+COPY test/test.robot /home/test.robot
 
 # Ensure the scripts are executable
 RUN chmod +x /home/start_vd.sh && \

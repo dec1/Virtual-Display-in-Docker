@@ -33,12 +33,19 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
 
         - simple test with selenium if we can start browser an point it to remote url        
             - `python3 /home/test_navigate.py`
+                
+                ```
+                Example Domain
+                This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.
+                More information...
+                ```
+
         ### 
         - ui test that wont work in headless mode        
-            - `python3 /home/test_file_upload.py`
+            - `python3 /home/test_canvas.py`
 
                 ```
-                Test passed: File uploaded successfully
+                Test passed: ??
                 ```
 
                 ### 
