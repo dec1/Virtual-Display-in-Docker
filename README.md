@@ -1,6 +1,6 @@
 # Virtual Display in Docker
 
-Many applications and automated tests, such as those using Selenium for browser automation, must be run in a **graphical environment** to function properly. It would be nice to also be able to run such applications (or automated tests theron) in **headless** environments like CI/CD pipelines or cloud-based servers. Its possible, but doing so can be challenging. 
+Some applications and automated tests, must be run in a **graphical environment** to function properly. It would be nice to also be able to run such applications (or automated tests theron) in **headless** environments like CI/CD pipelines or cloud-based servers. Its possible, but doing so can be challenging. 
 
 This repository, and the included [scripts](script/) helps you setup a Docker container with a virtual display suitable for running applications that normally require a graphical environment. 
 
