@@ -55,7 +55,6 @@ COPY script/stop_vd.sh /home/stop_vd.sh
 
 # Copy test files into the container
 COPY test/test_navigate.py /home/test_navigate.py
-COPY test/test_canvas.py /home/test_canvas.py
 COPY test/test.robot /home/test.robot
 
 # Ensure the scripts are executable
