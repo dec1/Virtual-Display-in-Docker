@@ -17,32 +17,35 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
 - Build an image from the included [Dockerfile](./Dockerfile) (which includes the virtual display scripts, as well as dependencies for selenium testing and chrome automation)
     - `docker build -t my_image .`
 
+######
 - Run a container from this image
     - `docker run -it --name my_container my_image`
 
 
 ###
-- **Start the virtual display**
-    - `start_vd.sh 8`
-
+- **Start a virtual display** (with given arbitrary number)
+    - `source ./start_vd.sh 8`
+    
 - ### Run your gui application and/or tests
     - Example:
         - use the python virtual env we set up in the container
             - `source /opt/robotframework/bin/activate`
 
-        ### 
-        - simple test wih selenium if we can start browser an point it to remote        
-            - `python3 /home/test_chrome.py`
-
+        ###
+        - simple test with selenium if we can use browser to retrieve a remote url         
+            - `python3 /home/test_navigate.py`
+                
                 ```
                 Example Domain
                 This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.
                 More information...
                 ```
+
+
         ###
         - run automated test with the [robot framework ](https://robotframework.org/)  
 
-            - `/opt/robotframework/bin/robot /home/simple_test.robot`
+            - `/opt/robotframework/bin/robot /home/test.robot`
                 ```==============================================================================
                 Simple Test                                                                   
                 ==============================================================================
@@ -57,12 +60,9 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
                 ```
 
 
-
-
-
 ###
-- **Stop the virtual display**
-    - `stop_vd.sh 8`
+- **Stop the virtual display** (started with the number chosen above)
+    - `./stop_vd.sh 8`
 
 
 
