@@ -22,27 +22,31 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
 
 
 ###
-- **Start the virtual display**
-    - `start_vd.sh 8`
-
+- **Start a virtual display** (with given arbitrary number)
+    - `my_display=8` 
+    - `source start_vd.sh $my_display`
+    
 - ### Run your gui application and/or tests
     - Example:
         - use the python virtual env we set up in the container
             - `source /opt/robotframework/bin/activate`
 
+        - simple test with selenium if we can start browser an point it to remote url        
+            - `python3 /home/test_navigate.py`
         ### 
-        - simple test wih selenium if we can start browser an point it to remote        
-            - `python3 /home/test_chrome.py`
+        - ui test that wont work in headless mode        
+            - `python3 /home/test_file_upload.py`
 
                 ```
-                Example Domain
-                This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.
-                More information...
+                Test passed: File uploaded successfully
                 ```
+
+                ### 
+
         ###
         - run automated test with the [robot framework ](https://robotframework.org/)  
 
-            - `/opt/robotframework/bin/robot /home/simple_test.robot`
+            - `/opt/robotframework/bin/robot /home/test.robot`
                 ```==============================================================================
                 Simple Test                                                                   
                 ==============================================================================
@@ -62,7 +66,7 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
 
 ###
 - **Stop the virtual display**
-    - `stop_vd.sh 8`
+    - `stop_vd.sh $DISPLAY`
 
 
 

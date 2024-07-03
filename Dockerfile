@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xfwm4 \
     psmisc \
     procps \
+    vim \
     python3 \
     python3-pip \
     python3-venv \
@@ -55,15 +56,18 @@ RUN wget -q https://chromedriver.storage.googleapis.com/126.0.6478.126/chromedri
 # Set the working directory
 WORKDIR /home
 
-# Copy the scripts and test files into the container
-COPY script/start_vd.sh /usr/local/bin/start_vd.sh
-COPY script/stop_vd.sh /usr/local/bin/stop_vd.sh
-COPY test/simple_test.robot /home/simple_test.robot
-COPY test/test_chrome.py /home/test_chrome.py
+# Copy the scripts into the container
+COPY script/start_vd.sh /home/start_vd.sh
+COPY script/stop_vd.sh /home/stop_vd.sh
+
+# Copy test files into the container
+COPY test/test.robot /home/test.robot
+COPY test/test_navigate.py /home/test_navigate.py
+COPY test/test_file_upload.py /home/test_file_upload.py
 
 # Ensure the scripts are executable
-RUN chmod +x /usr/local/bin/start_vd.sh && \
-    chmod +x /usr/local/bin/stop_vd.sh
+RUN chmod +x /home/start_vd.sh && \
+    chmod +x /home/stop_vd.sh
 
 # Set the entrypoint
 ENTRYPOINT ["/bin/bash"]
