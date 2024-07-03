@@ -73,7 +73,7 @@ This repository, and the included [scripts](script/) helps you setup a Docker co
 
 ###
 - **Stop the virtual display**
-    - `stop_vd.sh $DISPLAY`
+    - `stop_vd.sh $my_display`
 
 
 

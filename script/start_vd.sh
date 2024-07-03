@@ -20,19 +20,19 @@ fi
 
 export DISPLAY=:$DISPLAY_NUMBER
 
-# Start xfwm4 and capture the PID
-xfwm4 --display :$DISPLAY_NUMBER &
-XFWM4_PID=$!
+# Start openbox and capture the PID
+openbox &
+OPENBOX_PID=$!
 sleep 2
 
-# Ensure the xfwm4 PID is valid
-if [ -z "$XFWM4_PID" ]; then
-    echo "Failed to start xfwm4"
+# Ensure the openbox PID is valid
+if [ -z "$OPENBOX_PID" ]; then
+    echo "Failed to start openbox"
     exit 1
 fi
 
-# Save xfwm4 PID to file
-echo $XFWM4_PID > $HOME/.xvfb_xfwm4_$DISPLAY_NUMBER.pid
+# Save openbox PID to file
+echo $OPENBOX_PID > $HOME/.xvfb_openbox_$DISPLAY_NUMBER.pid
 
 echo "Xvfb started on display :$DISPLAY_NUMBER with PID $XVFB_PID"
-echo "xfwm4 PID $XFWM4_PID saved to $HOME/.xvfb_xfwm4_$DISPLAY_NUMBER.pid"
+echo "openbox PID $OPENBOX_PID saved to $HOME/.xvfb_openbox_$DISPLAY_NUMBER.pid"
