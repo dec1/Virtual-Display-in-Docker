@@ -17,7 +17,9 @@ jobs:
         run: docker build -t virtual-display-test .
 
       - name: Run Test Inside Container
+        # We chain the commands:
+        # 1. Start Virtual Display (start_vd.sh)
+        # 2. Activate the Python Virtual Environment (source .../activate)
+        # 3. Run the test script
         run: |
-          # Run the container and execute the test script inside it
-          # We use the start_vd.sh script to initialize the display before running python
-          docker run --rm virtual-display-test /bin/bash -c "source ./start_vd.sh 99 && python3 test_navigate.py"
+          docker run --rm virtual-display-test -c "source ./start_vd.sh 99 && source /opt/robotframework/bin/activate && python3 test_navigate.py"
