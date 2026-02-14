@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t virtual-display-test .
+
+      - name: Run Test Inside Container
+        run: |
+          # Run the container and execute the test script inside it
+          # We use the start_vd.sh script to initialize the display before running python
+          docker run --rm virtual-display-test /bin/bash -c "source ./start_vd.sh 99 && python3 test_navigate.py"
